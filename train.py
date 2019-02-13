@@ -109,4 +109,5 @@ if __name__ == "__main__":
         ng.callbacks.SummaryWriter((config.VAL_PSTEPS//1), trainer.context['summary_writer'], tf.summary.merge_all()),
     ])
     # launch training
+    print("starting totrain")
     trainer.train()

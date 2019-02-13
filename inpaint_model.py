@@ -39,6 +39,9 @@ class InpaintCAModel(Model):
         xin = x
         offset_flow = None
         ones_x = tf.ones_like(x)[:, :, :, 0:1]
+        print(x.shape)
+        print(ones_x.shape)
+        print((ones_x*mask).shape)
         x = tf.concat([x, ones_x, ones_x*mask], axis=3)
 
         # two stage network
