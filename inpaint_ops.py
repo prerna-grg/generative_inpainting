@@ -293,7 +293,6 @@ def contextual_attention(f, b, mask=None, ksize=3, stride=1, rate=1,
             yi = tf.reshape(yi, [1, fs[2], fs[1], bs[2], bs[1]])
             yi = tf.transpose(yi, [0, 2, 1, 4, 3])
         yi = tf.reshape(yi, [1, fs[1], fs[2], bs[1]*bs[2]])
-
         # softmax to match
         yi *=  mm  # mask
         yi = tf.nn.softmax(yi*scale, 3)

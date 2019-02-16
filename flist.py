@@ -26,12 +26,12 @@ if __name__ == "__main__":
 		training_folder = os.listdir(dir_item) 
 		print(training_folder)
 		for training_item in training_folder: 
-			training_item = dir_item + "/training" + "/" + training_item 	
+			training_item = dir_item + "/" + training_item 	
 			training_file_names.append(training_item) 
 		
 		validation_folder = os.listdir(dir_item ) 
 		for validation_item in validation_folder: 
-			validation_item = dir_item + "/validation" + "/" + validation_item 
+			validation_item = dir_item + "/" + validation_item 
 			validation_file_names.append(validation_item) 
 		
 	# print all file paths 
@@ -47,6 +47,7 @@ if __name__ == "__main__":
 		shuffle(validation_file_names) 
 	
 	# make output file if not existed 
+	print(args.train_filename)
 	if not os.path.exists(args.train_filename): 
 		os.mknod(args.train_filename) 
 	

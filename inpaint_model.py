@@ -39,11 +39,7 @@ class InpaintCAModel(Model):
         xin = x
         offset_flow = None
         ones_x = tf.ones_like(x)[:, :, :, 0:1]
-        print(x.shape)
-        print(ones_x.shape)
-        print((ones_x*mask).shape)
         x = tf.concat([x, ones_x, ones_x*mask], axis=3)
-
         # two stage network
         cnum = 32
         with tf.variable_scope(name, reuse=reuse), \
@@ -68,6 +64,7 @@ class InpaintCAModel(Model):
             x = gen_deconv(x, cnum, name='conv15_upsample')
             x = gen_conv(x, cnum//2, 3, 1, name='conv16')
             x = gen_conv(x, 3, 3, 1, activation=None, name='conv17')
+
             x = tf.clip_by_value(x, -1., 1.)
             x_stage1 = x
             # return x_stage1, None, None
@@ -95,8 +92,7 @@ class InpaintCAModel(Model):
             x = gen_conv(x, 2*cnum, 3, 1, name='pmconv3')
             x = gen_conv(x, 4*cnum, 3, 2, name='pmconv4_downsample')
             x = gen_conv(x, 4*cnum, 3, 1, name='pmconv5')
-            x = gen_conv(x, 4*cnum, 3, 1, name='pmconv6',
-                         activation=tf.nn.relu)
+            x = gen_conv(x, 4*cnum, 3, 1, name='pmconv6', activation=tf.nn.relu)
             x, offset_flow = contextual_attention(x, x, mask_s, 3, 1, rate=2)
             x = gen_conv(x, 4*cnum, 3, 1, name='pmconv9')
             x = gen_conv(x, 4*cnum, 3, 1, name='pmconv10')
